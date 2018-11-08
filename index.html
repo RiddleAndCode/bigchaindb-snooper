@@ -2,189 +2,189 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <!-- font awesome -->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+  <!-- font awesome -->
+  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="css/snooper.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+  <link rel="stylesheet" type="text/css" href="css/snooper.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 
-    <title>BigchainDB Snooper</title>
+  <title>BigchainDB Snooper | RIDDLE&CODE</title>
 </head>
 
 <body>
 
-    <div id="snooper">
+  <div id="snooper">
 
-        <!-- left menu -->
-        <div id="menu">
-            <div class="menu-button" v-on:click="showSettings = false">
-                <i class="fas fa-eye"></i>
-            </div>
-            <div class="menu-button" v-on:click="showSettings = true">
-                <i class="fas fa-cog"></i>
-            </div>
-        </div>
+    <!-- left menu -->
+    <div id="menu">
+      <div class="menu-button" v-on:click="showSettings = false">
+        <i class="fas fa-eye"></i>
+      </div>
+      <div class="menu-button" v-on:click="showSettings = true">
+        <i class="fas fa-cog"></i>
+      </div>
+    </div>
 
-        <!--- content container -->
-        <div id="content">
+    <!--- content container -->
+    <div id="content">
 
-            <!-- Options page -->
-            <div id="sn-options" class="content-pane" v-if="showSettings">
+      <!-- Options page -->
+      <div id="sn-options" class="content-pane" v-if="showSettings">
 
-                <!-- Url settings -->
-                <div class="settings-pane">
+        <!-- Url settings -->
+        <div class="settings-pane">
 
-                    <div class="form-group">
-                        <h2>Edit settings</h2>
-                        <p>Enter the URL of the BigchainDB Node you want to inspect.</p>
+          <div class="form-group">
+            <h2>Edit settings</h2>
+            <p>Enter the URL of the BigchainDB Node you want to inspect.</p>
 
-                        <input type="text" class="snoop-input" placeholder="https://test.bigchaindb.com" v-model="urlInput">
-                        <button v-on:click="saveSettings()">Apply</button>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- Snoop page -->
-            <div id="snoop" class="content-pane" v-if="!showSettings">
-
-                <!-- Search pane -->
-                <div id="snoop-search" class="snoop-pane">
-
-                    <div id="snoop-search-input-container">
-                        <input v-model="searchInput" v-on:keyup="onSearchInputChange()" placeholder="🔎 Search for an asset..." type="text">
-                        <a v-on:click="resetSearchInput()">
-                            <i class="fas fa-times"></i>
-                        </a>
-                    </div>
-
-                    <div v-if="assetsLoading" class="snoop-loading">
-                        <img alt="loading icon" src="img/loading.png" width="50" height="50">
-                    </div>
-
-                    <div v-if="assets.length == 0 && !assetsLoading && searchInput.length != 0" class="snoop-title">
-                        <p>No assets found.</p>
-                    </div>
-
-                    <div v-for="asset in assets" class="snoop-asset snoop-item animated bounceInLeft" v-on:click="displayAssetTransactions(asset.id)">
-                        <div class="asset-id item-id">{{asset.id}}</div>
-                        <div class="asset-data item-data">
-                            <pre>{{JSON.stringify(asset.data, null, 2)}}</pre>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Transactions pane -->
-                <div id="snoop-transactions" class="snoop-pane">
-
-                    <div class="snoop-title">
-                        <h3>Transactions
-                            <span v-if="transactions.length != 0">: {{transactions.length}}</span>
-                        </h3>
-                    </div>
-
-                    <div v-if="transactionsLoading" class="snoop-loading">
-                        <img v-if="transactionsLoading" alt="loading icon" src="img/loading.png" width="50" height="50">
-                    </div>
-
-                    <div v-for="transaction in transactions" v-on:click="displayTransactionDetails(transaction)" class="snoop-transaction snoop-item animated bounceInLeft">
-                        <div class="item-id transaction-id">{{transaction.id}}</div>
-                        <div class="item-data transaction-data ">
-                            <pre>{{JSON.stringify(transaction, null, 2)}}</pre>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Details pane -->
-                <div id="snoop-details" class="snoop-pane">
-
-                    <div class="snoop-title">
-                        <h3>Transaction details</h3>
-                    </div>
-                    <span v-if="currentTransaction">
-
-                        <div class="snoop-item animated bounceInLeft">
-                            <div class="item-id detail-title">
-                                id
-                            </div>
-                            <div class="item-data detail-body">
-                                {{currentTransaction.id}}
-                            </div>
-                        </div>
-
-                        <div class="snoop-item animated bounceInLeft">
-                            <div class="item-id detail-title">
-                                version
-                            </div>
-                            <div class="item-id detail-body">
-                                {{currentTransaction.version}}
-                            </div>
-                        </div>
-
-                        <div class="snoop-item animated bounceInLeft">
-                            <div class="item-id detail-title">
-                                operation
-                            </div>
-                            <div class="item-data detail-body">
-                                {{currentTransaction.operation}}
-                            </div>
-                        </div>
-
-                        <div class="snoop-item animated bounceInLeft">
-                            <div class="item-id detail-title">
-                                inputs
-                            </div>
-                            <div class="item-data detail-body">
-                                <pre>{{JSON.stringify(currentTransaction.inputs, null, 2)}}</pre>
-                            </div>
-                        </div>
-
-
-                        <div class="snoop-item animated bounceInLeft">
-                            <div class="item-id detail-title">
-                                outputs
-                            </div>
-                            <div class="item-data detail-body">
-                                <pre>{{JSON.stringify(currentTransaction.outputs, null, 2)}}</pre>
-                            </div>
-                        </div>
-
-                        <div class="snoop-item animated bounceInLeft">
-                            <div class="item-id detail-title">
-                                asset
-                            </div>
-                            <div class="item-data detail-body">
-                                <pre>{{JSON.stringify(currentTransaction.asset, null, 2)}}</pre>
-                            </div>
-                        </div>
-
-                        <div class="snoop-item animated bounceInLeft">
-                            <div class="item-id detail-title">
-                                metadata
-                            </div>
-                            <div class="item-data detail-body">
-                                <pre>{{JSON.stringify(currentTransaction.metadata, null, 2)}}</pre>
-                            </div>
-                        </div>
-                    </span>
-
-                </div>
-
-            </div>
+            <input type="text" class="snoop-input" placeholder="https://test.bigchaindb.com" v-model="urlInput">
+            <button v-on:click="saveSettings()">Apply</button>
+          </div>
 
         </div>
+
+      </div>
+
+      <!-- Snoop page -->
+      <div id="snoop" class="content-pane" v-if="!showSettings">
+
+        <!-- Search pane -->
+        <div id="snoop-search" class="snoop-pane">
+
+          <div id="snoop-search-input-container">
+            <input v-model="searchInput" v-on:keyup="onSearchInputChange()" placeholder="🔎 Search for an asset..." type="text">
+            <a v-on:click="resetSearchInput()">
+              <i class="fas fa-times"></i>
+            </a>
+          </div>
+
+          <div v-if="assetsLoading" class="snoop-loading">
+            <img alt="loading icon" src="img/loading.png" width="50" height="50">
+          </div>
+
+          <div v-if="assets.length == 0 && !assetsLoading && searchInput.length != 0" class="snoop-title">
+            <p>No assets found.</p>
+          </div>
+
+          <div v-for="asset in assets" class="snoop-asset snoop-item animated bounceInLeft" v-on:click="displayAssetTransactions(asset.id)">
+            <div class="asset-id item-id">{{asset.id}}</div>
+            <div class="asset-data item-data">
+              <pre>{{JSON.stringify(asset.data, null, 2)}}</pre>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Transactions pane -->
+        <div id="snoop-transactions" class="snoop-pane">
+
+          <div class="snoop-title">
+            <h3>Transactions
+              <span v-if="transactions.length != 0">: {{transactions.length}}</span>
+            </h3>
+          </div>
+
+          <div v-if="transactionsLoading" class="snoop-loading">
+            <img v-if="transactionsLoading" alt="loading icon" src="img/loading.png" width="50" height="50">
+          </div>
+
+          <div v-for="transaction in transactions" v-on:click="displayTransactionDetails(transaction)" class="snoop-transaction snoop-item animated bounceInLeft">
+            <div class="item-id transaction-id">{{transaction.id}}</div>
+            <div class="item-data transaction-data ">
+              <pre>{{JSON.stringify(transaction, null, 2)}}</pre>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Details pane -->
+        <div id="snoop-details" class="snoop-pane">
+
+          <div class="snoop-title">
+            <h3>Transaction details</h3>
+          </div>
+          <span v-if="currentTransaction">
+
+            <div class="snoop-item animated bounceInLeft">
+              <div class="item-id detail-title">
+                id
+              </div>
+              <div class="item-data detail-body">
+                {{currentTransaction.id}}
+              </div>
+            </div>
+
+            <div class="snoop-item animated bounceInLeft">
+              <div class="item-id detail-title">
+                version
+              </div>
+              <div class="item-id detail-body">
+                {{currentTransaction.version}}
+              </div>
+            </div>
+
+            <div class="snoop-item animated bounceInLeft">
+              <div class="item-id detail-title">
+                operation
+              </div>
+              <div class="item-data detail-body">
+                {{currentTransaction.operation}}
+              </div>
+            </div>
+
+            <div class="snoop-item animated bounceInLeft">
+              <div class="item-id detail-title">
+                inputs
+              </div>
+              <div class="item-data detail-body">
+                <pre>{{JSON.stringify(currentTransaction.inputs, null, 2)}}</pre>
+              </div>
+            </div>
+
+
+            <div class="snoop-item animated bounceInLeft">
+              <div class="item-id detail-title">
+                outputs
+              </div>
+              <div class="item-data detail-body">
+                <pre>{{JSON.stringify(currentTransaction.outputs, null, 2)}}</pre>
+              </div>
+            </div>
+
+            <div class="snoop-item animated bounceInLeft">
+              <div class="item-id detail-title">
+                asset
+              </div>
+              <div class="item-data detail-body">
+                <pre>{{JSON.stringify(currentTransaction.asset, null, 2)}}</pre>
+              </div>
+            </div>
+
+            <div class="snoop-item animated bounceInLeft">
+              <div class="item-id detail-title">
+                metadata
+              </div>
+              <div class="item-data detail-body">
+                <pre>{{JSON.stringify(currentTransaction.metadata, null, 2)}}</pre>
+              </div>
+            </div>
+          </span>
+
+        </div>
+
+      </div>
 
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script src="js/snooper.js"></script>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="js/snooper.js"></script>
 </body>
 
 </html>
