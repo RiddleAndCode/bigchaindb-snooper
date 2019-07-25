@@ -42,7 +42,7 @@
             <h2>Edit settings</h2>
             <p>Enter the URL of the BigchainDB Node you want to inspect.</p>
 
-            <input type="text" class="snoop-input" placeholder="https://test.bigchaindb.com" v-model="urlInput">
+            <input type="text" class="snoop-input" :placeholder="BDB_URL" v-model="urlInput">
             <button v-on:click="saveSettings()">Apply</button>
           </div>
 
@@ -57,7 +57,7 @@
         <div id="snoop-search" class="snoop-pane">
 
           <div id="snoop-search-input-container">
-            <input v-model="searchInput" v-on:keyup="onSearchInputChange()" placeholder="🔎 Search for an asset..." type="text">
+            <input v-model="searchInput" v-on:keyup="onSearchInputChange()" placeholder="Search for an asset..." type="text"> <!-- 🔎 -->
             <a v-on:click="resetSearchInput()">
               <i class="fas fa-times"></i>
             </a>
@@ -75,6 +75,13 @@
             <div class="asset-id item-id">{{asset.id}}</div>
             <div class="asset-data item-data">
               <pre>{{JSON.stringify(asset.data, null, 2)}}</pre>
+            </div>
+          </div>
+
+          <div class="snoop-asset snoop-item animated bounceInLeft" v-on:click="displayAssetTransactions('be0607fad50a0e0ce56f890bfc0816b9d0d947ca10998ffec51d49bb4fbea22c')">
+            <div class="asset-id item-id">be0607fad50a0e0ce56f890bfc0816b9d0d947ca10998ffec51d49bb4fbea22c</div>
+            <div class="asset-data item-data">
+              <pre>no data</pre>
             </div>
           </div>
 
@@ -123,7 +130,7 @@
               <div class="item-id detail-title">
                 version
               </div>
-              <div class="item-id detail-body">
+              <div class="item-data detail-body">
                 {{currentTransaction.version}}
               </div>
             </div>

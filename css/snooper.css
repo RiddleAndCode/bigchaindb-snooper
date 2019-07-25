@@ -3,32 +3,52 @@
 :root
 {
     --sn-color-1: #4D5D6C;
-    --sn-color-2: #1C2939;
-    --sn-color-menu-text: white;
-    --sn-color-menu-border: rgb(185, 185, 185);
-    --sn-color-menu-hover: rgb(45, 61, 82);
+    --sn-color-2: rgb(180, 180, 180);
+    --sn-color-menu-text: black;
+    --sn-color-menu-icons: white;
+    --sn-color-menu-border: white;
+    --sn-color-menu-hover: rgb(205, 205, 205);
 
-    --sn-color-asset-title: rgb(180, 79, 79);
-    --sn-color-asset-body: rgb(196, 93, 93);
+    /* Color scheme for the assets (search results, 1st collumn) */
+    --sn-color-asset-id: rgb(0, 0, 0);
+    --sn-color-asset-title: rgb(240, 240, 240);
+    --sn-color-asset-body: rgb(255, 255, 255);
+    --sn-color-asset-data: rgb(0, 0, 0);
 
-    --sn-color-transaction-title: rgb(161, 144, 68);
-    --sn-color-transaction-body: rgb(184, 162, 65);
+    /* Color scheme for transactions (2nd collumn) */
+    --sn-color-transaction-id: rgb(255, 255, 255);
+    --sn-color-transaction-title: rgb(150, 150, 150);
+    --sn-color-transaction-body: rgb(165, 165, 165);
+    --sn-color-transaction-data: rgb(255, 255, 255);
 
-    --sn-color-detail-title: rgb(74, 124, 189);
-    --sn-color-detail-body: rgb(112, 151, 201);
+    /* Color scheme for transaction details (3rd collumn) */
+    --sn-color-detail-id: rgb(255, 255, 255);
+    --sn-color-detail-title: rgb(0, 0, 0);
+    --sn-color-detail-body: rgb(40, 40, 40);
+    --sn-color-detail-data: rgb(255, 255, 255);
 
-    --sn-color-snoop-search: rgb(42, 60, 82);
-    --sn-color-snoop-search-input-bg: rgb(23, 105, 211);
-    --sn-color-snoop-search-input: white;
+    --sn-color-snoop-search: rgb(205, 205, 205);
+    --sn-color-snoop-search-input-bg: rgb(255, 255, 255);
+    --sn-color-snoop-search-input: black;
+    --sn-size-snoop-search-input-border: 0px;
+    --sn-color-snoop-search-input-border: rgb(0, 0, 0);
 
-    --sn-color-snoop-transactions: rgb(50, 71, 97);
+    --sn-color-snoop-transactions: rgb(230, 230, 230);
 
-    --sn-color-snoop-details: rgb(58, 78, 102);
+    --sn-color-snoop-details: rgb(255, 255, 255);
+
+    --sn-color-snoop-title: black;
 
     --sn-menu-width: 75px;
     --sn-menu-font-size: calc(var(--sn-menu-width) * 0.4);
 
     --sn-item-border-radius: 3px;
+
+    /* color scheme for settings page */
+    --sn-color-settings-pane: black;
+    --sn-color-settings-pane-button: white;
+    --sn-color-settings-pane-button-text: black;
+    --sn-color-settings-pane-button-text-hover: rgb(240, 240, 240);
 }
 
 *
@@ -81,6 +101,8 @@ body
     width: var(--sn-menu-width);
     height: var(--sn-menu-width);
 
+    color: var(--sn-color-menu-icons);
+
 
     line-height: var(--sn-menu-width);
     font-size:   var(--sn-menu-font-size);
@@ -130,6 +152,7 @@ body
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    transition: 0.5s;
 }
 
 @media(max-width: 800px)
@@ -155,7 +178,7 @@ body
 {
     width: 100%;
     padding: 27px;
-    color: white;
+    color: var(--sn-color-snoop-title);
 }
 
 #snooper #content .content-pane .snoop-pane .snoop-loading
@@ -225,13 +248,19 @@ transition: 0.5s;
     padding: 10px;
     font-size: 15px;
 
-    border: 0px;
+    border: var(--sn-size-snoop-search-input-border) solid var(--sn-color-snoop-search-input-border);
+    border-right: 0px;
 
     background-color: var(--sn-color-snoop-search-input-bg);
     color: var(--sn-color-snoop-search-input);
 
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
+}
+
+#snooper #content .content-pane #snoop-search #snoop-search-input-container input:focus, .snoop-input:focus
+{
+    outline: none;
 }
 
 .snoop-input
@@ -249,6 +278,8 @@ transition: 0.5s;
 
     background-color: var(--sn-color-snoop-search-input-bg);
     color: var(--sn-color-snoop-search-input);
+    border: var(--sn-size-snoop-search-input-border) solid var(--sn-color-snoop-search-input-border);
+    border-left: 0px;
 
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -302,33 +333,39 @@ transition: 0.5s;
 #snooper #content .content-pane .snoop-pane .snoop-item .asset-id
 {
     background-color: var(--sn-color-asset-title);
+    color: var(--sn-color-asset-id);
 }
 
 
 #snooper #content .content-pane .snoop-pane .snoop-item .asset-data
 {
     background-color: var(--sn-color-asset-body);
+    color: var(--sn-color-asset-data);
 }
 
 #snooper #content .content-pane .snoop-pane .snoop-item .transaction-id
 {
     background-color: var(--sn-color-transaction-title);
+    color: var(--sn-color-transaction-id);
 }
 
 #snooper #content .content-pane .snoop-pane .snoop-item .transaction-data
 {
     background-color: var(--sn-color-transaction-body);
+    color: var(--sn-color-transaction-data);
 }
 
 #snooper #content .content-pane .snoop-pane .snoop-item .detail-title
 {
     background-color: var(--sn-color-detail-title);
+    color: var(--sn-color-detail-id);
     word-wrap: break-word;
 }
 
 #snooper #content .content-pane .snoop-pane .snoop-item .detail-body
 {
     background-color: var(--sn-color-detail-body);
+    color: var(--sn-color-detail-data);
     word-wrap: break-word;
 }
 
@@ -354,7 +391,7 @@ transition: 0.5s;
 {
     max-width: 600px;
     padding: 0 25px;
-    color: white;
+    color: var(--sn-color-settings-pane);
 }
 
 .settings-pane .form-group *
@@ -371,12 +408,12 @@ transition: 0.5s;
     padding: 15px;
     cursor: pointer;
 
-    color: white !important;
-    background-color: rgb(201, 65, 65);
+    color: var(--sn-color-settings-pane-button-text);
+    background-color: var(--sn-color-settings-pane-button);
     transition: background-color 0.2s;
 }
 
 .settings-pane .form-group button:hover
 {
-    background-color: rgb(228, 84, 84);
+    background-color: var(--sn-color-settings-pane-button-text-hover);
 }

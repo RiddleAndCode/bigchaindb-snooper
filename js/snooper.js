@@ -30,10 +30,11 @@ class BigchainDBSnooper {
 }
 
 /* global Vue */
-const BDB_URL = 'http://ipdb-eu1.riddleandcode.com:9984'
+var BDB_URL = 'http://ipdb3.riddleandcode.com:80'
 const snooper = new Vue({
   el: "#snooper",
   data: {
+
     snooperApi: new BigchainDBSnooper(BDB_URL),
     assets: new Array(),
     transactions: new Array(),
@@ -126,6 +127,7 @@ const snooper = new Vue({
       this.currentTransaction = transaction;
     },
     saveSettings() {
+      this.BDB_URL = this.urlInput;
       this.snooperApi = new BigchainDBSnooper(this.urlInput);
       setTimeout(function() { this.showSettings = false; }.bind(this), 1000);
     }
