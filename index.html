@@ -27,6 +27,10 @@
       <div class="menu-button" v-on:click="showSettings = true">
         <i class="fas fa-cog"></i>
       </div>
+      <div class="">
+        <img id="r3c-logo" alt="R3C logo" src="img/R3C.png">
+      </div>
+
     </div>
 
     <!--- content container -->
@@ -75,13 +79,6 @@
             <div class="asset-id item-id">{{asset.id}}</div>
             <div class="asset-data item-data">
               <pre>{{JSON.stringify(asset.data, null, 2)}}</pre>
-            </div>
-          </div>
-
-          <div class="snoop-asset snoop-item animated bounceInLeft" v-on:click="displayAssetTransactions('be0607fad50a0e0ce56f890bfc0816b9d0d947ca10998ffec51d49bb4fbea22c')">
-            <div class="asset-id item-id">be0607fad50a0e0ce56f890bfc0816b9d0d947ca10998ffec51d49bb4fbea22c</div>
-            <div class="asset-data item-data">
-              <pre>no data</pre>
             </div>
           </div>
 

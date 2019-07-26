@@ -3,7 +3,7 @@
 :root
 {
     --sn-color-1: #4D5D6C;
-    --sn-color-2: rgb(180, 180, 180);
+    --sn-color-2: rgb(0, 0, 0);
     --sn-color-menu-text: black;
     --sn-color-menu-icons: white;
     --sn-color-menu-border: white;
@@ -118,6 +118,14 @@ body
 {
     transition: 0.2s;
     background-color: var(--sn-color-menu-hover);
+}
+
+#snooper #menu #r3c-logo
+{
+    width: var(--sn-menu-width);
+    height: auto;
+    position: absolute;
+    bottom: 0;
 }
 
 #snooper #content
