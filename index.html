@@ -61,11 +61,28 @@
         <div id="snoop-search" class="snoop-pane">
 
           <div id="snoop-search-input-container">
-            <input v-model="searchInput" v-on:keyup="onSearchInputChange()" placeholder="Search for an asset..." type="text"> <!-- 🔎 -->
+            <input v-model="searchInput" v-on:keyup="onSearchInputChange()" placeholder="Search ..." type="text">
+            
+            <select v-model="searchType" v-on:change="changeSearchType()"  dir="rtl" >
+              <option value="metadata">metadata</option>
+              <option value="asset">asset</option>
+            </select>
+            
             <a v-on:click="resetSearchInput()">
               <i class="fas fa-times"></i>
             </a>
           </div>
+
+          <!--
+          <label>
+            <input v-model="searchType" type="radio" name="searchType" value="metadata" />
+            metadata
+          </label>
+          <label>
+            <input v-model="searchType" type="radio" name="searchType" value="asset"/>
+            asset
+          </label>
+          -->
 
           <div v-if="assetsLoading" class="snoop-loading">
             <img alt="loading icon" src="img/loading.png" width="50" height="50">

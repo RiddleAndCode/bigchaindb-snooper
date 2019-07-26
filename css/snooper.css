@@ -251,7 +251,7 @@ transition: 0.5s;
 #snooper #content .content-pane #snoop-search #snoop-search-input-container input, .snoop-input
 {
     float: left; 
-    width: calc(100% - 35px);
+    width: calc(100% - 125px);
     height: 40px;
     padding: 10px;
     font-size: 15px;
@@ -274,6 +274,32 @@ transition: 0.5s;
 .snoop-input
 {
     border-radius: 5px;
+}
+
+#snooper #content .content-pane #snoop-search #snoop-search-input-container select
+{
+    text-align: right;
+    float: left;
+    width: calc(90px);
+    height: 40px;
+    padding: 10px;
+    font-size: 15px;
+
+    background-color: var(--sn-color-snoop-search-input-bg);
+    color: var(--sn-color-snoop-search-input);
+    border: var(--sn-size-snoop-search-input-border) solid var(--sn-color-snoop-search-input-border);
+    border-left: 0px;
+
+    cursor: pointer;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+}
+
+#snooper #content .content-pane #snoop-search #snoop-search-input-container select::-ms-expand {
+    display: none;
 }
 
 #snooper #content .content-pane #snoop-search #snoop-search-input-container a
