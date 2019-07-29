@@ -251,7 +251,7 @@ transition: 0.5s;
 #snooper #content .content-pane #snoop-search #snoop-search-input-container input, .snoop-input
 {
     float: left; 
-    width: calc(100% - 125px);
+    width: calc(100% - 140px);
     height: 40px;
     padding: 10px;
     font-size: 15px;
@@ -280,7 +280,7 @@ transition: 0.5s;
 {
     text-align: right;
     float: left;
-    width: calc(90px);
+    width: calc(105px);
     height: 40px;
     padding: 10px;
     font-size: 15px;

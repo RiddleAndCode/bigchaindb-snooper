@@ -45,8 +45,8 @@
           <div class="form-group">
             <h2>Edit settings</h2>
             <p>Enter the URL of the BigchainDB Node you want to inspect.</p>
-
-            <input type="text" class="snoop-input" :placeholder="BDB_URL" v-model="urlInput">
+			<p>Your current Node: {{ BDB_URL }}</p>
+            <input type="text" class="snoop-input" placeholder="http://ipdb3.riddleandcode.com:80" v-model="urlInput">
             <button v-on:click="saveSettings()">Apply</button>
           </div>
 
