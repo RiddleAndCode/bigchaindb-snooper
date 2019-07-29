@@ -27,6 +27,10 @@
       <div class="menu-button" v-on:click="showSettings = true">
         <i class="fas fa-cog"></i>
       </div>
+      <div class="">
+        <img id="r3c-logo" alt="R3C logo" src="img/R3C.png">
+      </div>
+
     </div>
 
     <!--- content container -->
@@ -42,7 +46,7 @@
             <h2>Edit settings</h2>
             <p>Enter the URL of the BigchainDB Node you want to inspect.</p>
 
-            <input type="text" class="snoop-input" placeholder="https://test.bigchaindb.com" v-model="urlInput">
+            <input type="text" class="snoop-input" :placeholder="BDB_URL" v-model="urlInput">
             <button v-on:click="saveSettings()">Apply</button>
           </div>
 
@@ -57,11 +61,28 @@
         <div id="snoop-search" class="snoop-pane">
 
           <div id="snoop-search-input-container">
-            <input v-model="searchInput" v-on:keyup="onSearchInputChange()" placeholder="🔎 Search for an asset..." type="text">
+            <input v-model="searchInput" v-on:keyup="onSearchInputChange()" placeholder="Search ..." type="text">
+            
+            <select v-model="searchType" v-on:change="changeSearchType()"  dir="rtl" >
+              <option value="metadata">metadata</option>
+              <option value="asset">asset</option>
+            </select>
+            
             <a v-on:click="resetSearchInput()">
               <i class="fas fa-times"></i>
             </a>
           </div>
+
+          <!--
+          <label>
+            <input v-model="searchType" type="radio" name="searchType" value="metadata" />
+            metadata
+          </label>
+          <label>
+            <input v-model="searchType" type="radio" name="searchType" value="asset"/>
+            asset
+          </label>
+          -->
 
           <div v-if="assetsLoading" class="snoop-loading">
             <img alt="loading icon" src="img/loading.png" width="50" height="50">
@@ -123,7 +144,7 @@
               <div class="item-id detail-title">
                 version
               </div>
-              <div class="item-id detail-body">
+              <div class="item-data detail-body">
                 {{currentTransaction.version}}
               </div>
             </div>
